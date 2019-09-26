@@ -116,12 +116,14 @@ In  a simple windows form test it is called on
             scnFileNameTarget.Text = oPdf.FileNameTarget;
         }
 
+The result is
+![Image add with foot](https://raw.githubusercontent.com/vniclos/itext7-C-Sharp-test-02-With-images/master/testudo%20hemanni%20rage.png)
 
 
 The full code of tool library is: 
 ```
 ``` c
-/*
+*
  CONVENTION 
  1 variables of classs start in m_
  2  get function of variables are like variables name without m_
@@ -130,6 +132,7 @@ The full code of tool library is:
  4 
 
  // study samples
+ https://www.tutorialspoint.com/itext/itext_adding_paragraph.htm
  https://stackoverflow.com/questions/50445436/itext7-end-page-events-are-called-when-document-is-closed?noredirect=1&lq=1
 
  */
@@ -147,6 +150,9 @@ using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
+using iText.IO.Image;
+//import com.itextpdf.io.image.ImageData; 
+//import com.itextpdf.io.image.ImageDataFactory;
 namespace testudines.pdf
 {
     public class ClsPdfBuilder
@@ -251,6 +257,7 @@ namespace testudines.pdf
         public void fnc_AddTitle(uint pItem, String pTitle)
         {
             Paragraph p = new Paragraph();
+           
             Text tItem = new Text(pItem.ToString() + ".-   ");
             Text tTitle = new Text(pTitle.Trim());
             tItem.SetFontSize(12);
@@ -269,6 +276,26 @@ namespace testudines.pdf
         public void fnc_AddText(String pText)
         {
             m_Document.Add(new Paragraph(pText));
+        }
+
+        public void fnc_AddImage(String pImgPath, String pFootText)
+        {
+            Paragraph p = new Paragraph();
+            float fSpace = 10f;
+            p.SetBorderBottom(new iText.Layout.Borders.SolidBorder(1));
+            p.SetMargin(0f);
+            p.SetMarginTop(fSpace);
+            p.SetMarginBottom(fSpace);
+          
+            ImageData imgData = ImageDataFactory.Create(pImgPath);
+            Image img = new Image(imgData);
+            img.SetAutoScale(true);
+            img.SetPaddingTop(10f);
+            p.Add(img);
+            p.Add(pFootText);
+            m_Document.Add(p);
+
+
         }
         /// <summary>
         /// Close temporal document and try to copy to 
@@ -315,8 +342,7 @@ namespace testudines.pdf
         /// </summary>
         private void fncToolClearLastError() { m_ErrorMsg = ""; m_IsError = false; }
 
-
-
+        
 
 
 
