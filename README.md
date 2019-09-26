@@ -117,7 +117,9 @@ In  a simple windows form test it is called on
         }
 
 The result is
-![Image add with foot](https://raw.githubusercontent.com/vniclos/itext7-C-Sharp-test-02-With-images/master/testudo%20hemanni%20rage.png)
+
+![](https://raw.githubusercontent.com/vniclos/itext7-C-Sharp-test-02-With-images/master/testudo%20hemanni%20rage.png)
+
 
 
 The full code of tool library is: 
