@@ -73,6 +73,53 @@ namespace testudines_pdf_test
 
 ***Library code***
 
+Now I add one new function for write a image scaled to widh of page, and a footer test, that need use space name **iText.IO.Image** and this function 
+``` c
+using iText.IO.Image;
+
+       public void fnc_AddImage(String pImgPath, String pFootText)
+        {
+            Paragraph p = new Paragraph();
+            float fSpace = 10f;
+            p.SetBorderBottom(new iText.Layout.Borders.SolidBorder(1));
+            p.SetMargin(0f);
+            p.SetMarginTop(fSpace);
+            p.SetMarginBottom(fSpace);
+          
+            ImageData imgData = ImageDataFactory.Create(pImgPath);
+            Image img = new Image(imgData);
+            img.SetAutoScale(true);
+            img.SetPaddingTop(10f);
+            p.Add(img);
+            p.Add(pFootText);
+            m_Document.Add(p);
+
+
+        }
+
+```
+In  a simple windows form test it is called on 
+``` c
+ private void ScnBtnTestOne_Click(object sender, EventArgs e)
+        {
+            scnFileNameTarget.Text = "Building Pdf...";
+            String sImgPath = "";
+            ClsPdfBuilder oPdf = new ClsPdfBuilder(scnDirTemp.Text);
+            oPdf.fnc_00_Start(scnDirTarget.Text, scnFileNameSort.Text,
+                scnMetaTitle.Text, scnMetaAutor.Text, scnMetaCreator.Text, scnMetaKeyWords.Text, scnMetaSubject.Text);
+            oPdf.fnc_AddTitle(1, scnDocTitle.Text);
+            oPdf.fnc_AddText(scnDocTextLorem.Text);
+            sImgPath = m_Dir_Resources_test + "imgPortadaMapa.jpg";
+            oPdf.fnc_AddImage(sImgPath,  "Testudo Graeca range, author V.Niclos");
+            oPdf.fnc_AddText(scnDocTextLorem.Text);
+            oPdf.fnc_99_End();
+            scnFileNameTarget.Text = oPdf.FileNameTarget;
+        }
+
+
+
+The full code of tool library is: 
+```
 ``` c
 /*
  CONVENTION 
